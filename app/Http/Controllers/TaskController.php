@@ -19,7 +19,10 @@ class TaskController extends Controller
 
     public function index()
     {
-
+        $tasks = Task::where(['user_id' => Auth::user()->id])->get();
+        return response()->json([
+            'tasks'     =>      $tasks,
+        ], 200);
     }
 
     /**
@@ -42,12 +45,12 @@ class TaskController extends Controller
         $this->validate($request, [
         'name'          =>  'required|max:255',
         'description'   =>  'required',
-        'completed'
         ]);
 
         $task = Task::create([
             'name'  => request('name'),
             'descritpion' => request('description'),
+            'completed' => request('completed'),
             'user_id' => Auth::user()->id
         ]);
 
@@ -88,9 +91,21 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
-    }
 
+        $this->validate($request, [
+            'name'        => 'required|max:255',
+            'description' => 'required',
+        ]);
+
+        $task->name = request('name');
+        $task->description = request('description');
+        $task->save();
+
+        return response()->json([
+            'message' => 'Task updated successfully!'
+        ], 200);
+    }
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -99,6 +114,9 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return response()->json([
+            'message' => 'Task deleted successfully!'
+        ], 200);
     }
 }

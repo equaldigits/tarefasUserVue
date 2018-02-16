@@ -12,4 +12,10 @@ class Task extends Model
         'description',
         'completed'
     ];
+
+
+    public function isComplete()
+    {
+        return false;
+    }
 }

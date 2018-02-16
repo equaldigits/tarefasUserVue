@@ -25,6 +25,9 @@
                                     Descrição
                                 </th>
                                 <th>
+                                    Completa
+                                </th>
+                                <th>
                                     Acção
                                 </th>
                             </tr>
@@ -35,6 +38,9 @@
                                 </td>
                                 <td>
                                     {{ task.description }}
+                                </td>
+                                <td>
+                                    {{ task.checked }}
                                 </td>
                                 <td>
                                     <button @click="initUpdate(index)" class="btn btn-success btn-xs">Edit</button>

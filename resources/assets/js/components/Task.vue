@@ -44,7 +44,7 @@
                             </tbody>
                         </table>
                     </div>
-<!--                     <div class="panel-body">
+                    <!--                     <div class="panel-body">
                         <table class="table table-bordered table-striped table-responsive" v-if="tasks.length > 0">
                             <caption>Por completar</caption>
                             <tbody>
@@ -100,22 +100,22 @@
 
                         <div class="form-group">
                             <label for="name">Nome:</label>
-                            <input type="text" name="name" id="name" placeholder="Task Name" class="form-control"
+                            <input type="text" name="name" id="name" placeholder="Nome da tarefa" class="form-control"
                                    v-model="task.name">
                         </div>
                         <div class="form-group">
                             <label for="description">Descrição:</label>
                             <textarea name="description" id="description" cols="30" rows="5" class="form-control"
-                                      placeholder="Task Description" v-model="task.description"></textarea>
+                                      placeholder="Descrição da tarefa" v-model="task.description"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="completed">Finalizada: &nbsp&nbsp&nbsp</label>
+                            <label for="checked">Finalizada: &nbsp&nbsp&nbsp</label>
                             <Input type="checkbox" name="description" id="checkbox" v-model="task.checked">Completa</input>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-warning" data-dismiss="modal">Fechar</button>
-                        <button type="button" @click="createTask" class="btn btn-primary">Submeter</button>
+                        <button type="button" v-on:click="createTask()" class="btn btn-primary">Submeter</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -139,24 +139,24 @@
 
                         <div class="form-group">
                             <label>Nome:</label>
-                            <input type="text" placeholder="Task Name" class="form-control"
+                            <input type="text" placeholder="Nome da tarefa" class="form-control"
                                    v-model="update_task.name">
                         </div>
                         <div class="form-group">
                             <label for="description">Descrição:</label>
                             <textarea cols="30" rows="5" class="form-control"
-                                      placeholder="Task Description" v-model="update_task.description"></textarea>
+                                      placeholder="Descrição da tarefa" v-model="update_task.description"></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label for="completed">Finalizada: &nbsp&nbsp&nbsp</label>
-                            <Input type="checkbox" name="description" id="completed" cols="30" rows="5" v-model="task.completed">Completa</input>
+                            <label for="checked">Finalizada: &nbsp&nbsp&nbsp</label>
+                            <Input type="checkbox" name="description" id="completed" cols="30" rows="5" v-model="task.checked">Completa</input>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="button" @click="updateTask" class="btn btn-primary">Submeter</button>
+                        <button type="button" v-on:click="updateTask" class="btn btn-primary">Submeter</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -172,7 +172,7 @@
                 task: {
                     name: '',
                     description: '',
-                    completed: ''
+                    checked: ''
                 },
                 errors: [],
                 tasks: [],
@@ -193,6 +193,7 @@
                 axios.post('/task', {
                     name: this.task.name,
                     description: this.task.description,
+                    complete: this.task.checked,
                 })
                     .then(response => {
 
@@ -204,21 +205,14 @@
 
                     })
                     .catch(error => {
-                        this.errors = [];
-                        if (error.response.data.errors.name) {
-                            this.errors.push(error.response.data.errors.name[0]);
-                        }
 
-                        if (error.response.data.errors.description) {
-                            this.errors.push(error.response.data.errors.description[0]);
-                        }
                     });
             },
             reset()
             {
                 this.task.name = '';
                 this.task.description = '';
-                this.taks.completed = '';
+                this.taks.checked = '';
             },
             readTasks()
             {
@@ -235,6 +229,8 @@
                 $("#update_task_model").modal("show");
                 this.update_task = this.tasks[index];
             },
+
+
             updateTask()
             {
                 axios.patch('/task/' + this.update_task.id, {

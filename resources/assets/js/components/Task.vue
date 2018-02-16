@@ -2,12 +2,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <button @click="initAddTask()" class="btn btn-primary btn-xs pull-right">
                             + Adicionar Nova Tarefa
                         </button>
-                        Minhas tarefas
+                        &nbsp&nbspMinhas tarefas
                     </div>
 
                     <div class="panel-body">

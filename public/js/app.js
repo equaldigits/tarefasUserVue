@@ -47261,7 +47261,7 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel panel-primary" }, [
           _c("div", { staticClass: "panel-heading" }, [
             _c(
               "button",
@@ -47279,7 +47279,7 @@ var render = function() {
                 )
               ]
             ),
-            _vm._v("\n                    Minhas tarefas\n                ")
+            _vm._v("\n                      Minhas tarefas\n                ")
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "panel-body" })
